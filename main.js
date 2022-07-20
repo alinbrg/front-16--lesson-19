@@ -1,142 +1,257 @@
-// დავალება:
+// // 1. setTimeout ან setInterval - ის გამოყენებით გააკეთეთ საათი რომელიც იმუშავებს როგორც ნამდვილი სააათი. გამოიყენეთ ქვემოთ მობმული სურათი (საათი.png).
+// const clock = document.querySelector(".clock");
+// function createClock() {
+// 	let day = new Date(),
+// 		hour = ("" + day.getHours()).padStart(2, "0"),
+// 		min = ("" + day.getMinutes()).padStart(2, "0"),
+// 		sec = ("" + day.getSeconds()).padStart(2, "0");
 
-//   1. არსებულ ფორმში დაამატეთ 3 ველი personal_number, mobile_number, position
+// 	// console.log(hour, min, sec);
 
-//   2.  personal_number - ვალიდაცია:  სავალდებულოა, უნდა შეიცავდეს მხოლოდ რიცხვებს, შეყვანილი სიმბოლოების რაოდენობა უნდა იყოს 11 ის ტოლი.
+// 	// clock.innerHTML = `${hour} : ${min} : ${sec}`;
 
-//   3.  mobile_number - ვალიდაცია: სავალდებულოა, უნდა შედგებოდეს 9 სიმბოლოსგან (მაგ. 599123456).
+// 	if (hour <= 12) {
+// 		clock.innerHTML = `${hour} : ${min} : ${sec} AM`;
+// 	} else {
+// 		clock.innerHTML = `${hour - 12} : ${min} : ${sec} PM`;
+// 	}
+// }
 
-//   4. position - ვალიდაცია: არ არის სავალდებულო, მაქსიმალური სიმბოლების რაოდენობა 30.
+// setInterval(createClock, 1000);
+
+// // 2. ლექციაზე შექმნილ სლაიდერს დავამატოთ:
+// //    1. როდესაც ავტომატურად ხდება სლაიდების შეცვლა თუ მაუსს მივიტან სურათთან, ავტომატური სლაიდი გაჩერდეს.
+// //    2. თუ მაუსი მიტანილი მაქვს სურათზე და შემდეგ გამოვწევ სურათიდან, ავტომატური სლაიდი გაგრძელდეს. (მოუსემინეთ  mouseenter, mouseleave)  ივენთებს
+// //    დამხმარე მასალა: https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event
+
+// // 3. დავამატოთ ასეთი (ღილაკები.png) ღილაკები იმდენი რამდენი სლაიდიც გვაქვს, ღილაკზე დაკლიების შემდეგ სლაიდერი უნდა გადავიდეს შესაბამის სლაიდზე (პირველ ღილაკზე თუ დავკლიკე უნდა გადავიდეს პირველ სლაიზე და ასე შემდეგ).
+// // COMMENT
+// // slider
+// // სლაიდერის ღილაკები
+// const nextBtn = document.querySelector("#next"),
+// 	prevBtn = document.querySelector("#prev"),
+// 	sliders = document.querySelectorAll(".slider-item"),
+// 	startAutoSliding = document.querySelector("#start-auto"),
+// 	stopAutoSliding = document.querySelector("#stop-auto"),
+// 	pgnBulletsBlock = document.querySelector(".pagination-bullets"),
+// 	bullets = document.querySelectorAll(".pgn-bullet"),
+// 	slidesWrapper = document.querySelector(".slider-wrapper");
+
+// // საწყისი activeIndex
+// let activeIndex = 0;
+
+// console.log("sliders", sliders);
+
+// function initSlider() {
+// 	// next prev ღილაკებზე ლისენერის დამატება
+// 	nextBtn.addEventListener("click", showNextSlide);
+// 	prevBtn.addEventListener("click", showPrevSlide);
+
+// 	// ერთ-ერთ სლაიდზე active კლასის დამატება activeIndex-ის მიხედვით
+// 	renderSlides();
+// 	renderBullets();
+// 	// კლავიატურის ღილაკებზე მოსმენა
+// 	document.addEventListener("keyup", (e) => {
+// 		// console.log(e);
+// 		// e.code გვიბრუნდებს შესაბამისი ღილაკის შესახებ ინფორმაციას
+// 		if (e.code === "ArrowLeft") {
+// 			showPrevSlide();
+// 		}
+// 		if (e.code === "ArrowRight") {
+// 			showNextSlide();
+// 		}
+// 	});
+// }
+
+// function renderBullets() {
+// 	bullets.forEach((dot, index) => {
+// 		dot.addEventListener("click", () => {
+// 			console.log(index);
+// 			activeIndex = index;
+// 			renderSlides();
+// 		});
+// 	});
+// }
+
+// function updateActiveClass(arr) {
+// 	arr.forEach((el, i) => {
+// 		if (i === activeIndex) {
+// 			el.classList.add("active");
+// 		} else {
+// 			el.classList.remove("active");
+// 		}
+// 	});
+// }
+
+// // activeIndex (0, 1, ან 2) ინდექსის მქონე სლაიდზე ამატებს active კლასს, დანარჩენებზე შლის
+// function renderSlides() {
+// 	console.log("activeIndex", activeIndex);
+// 	updateActiveClass(sliders);
+// 	updateActiveClass(bullets);
+// }
+
+// //
+// function showNextSlide() {
+// 	// console.log("next");
+// 	// activeIndex ის მნიშვნელობის გაზრდა და ვამოწმებთ ეს ინდექსი (სლაიდების რაოდენობას - 1)-ზე მეტი ხომ არაა
+// 	if (activeIndex === sliders.length - 1) {
+// 		activeIndex = 0;
+// 	} else {
+// 		activeIndex++;
+// 	}
+// 	//  active კლასის ხელახლა დამატება შესაბამის ელემენტზე
+// 	renderSlides();
+// }
+
+// function showPrevSlide() {
+// 	// console.log("prevBtn");
+// 	// activeIndex ის მნიშვნელობის შემცირება და ვამოწმებთ ეს ინდექსი 0-ზე ნაკლები ხომ არაა
+// 	if (activeIndex === 0) {
+// 		activeIndex = sliders.length - 1;
+// 	} else {
+// 		activeIndex--;
+// 	}
+// 	//  active კლასის ხელახლა დამატება შესაბამის ელემენტზე
+// 	renderSlides();
+// }
+
+// // COMMENT autosliding
+// // id სლაიდერის ინტერვალისთვის
+// let autoSlidingId = null;
+
+// function startIntervalFnSlider() {
+// 	// ეს კოდი შესრულდება ყოველ 3 წამში (3000 მილიწამში)
+// 	autoSlidingId = setInterval(showNextSlide, 5000);
+// }
+
+// // autosliding -ის შეჩერება
+// function stopIntervalFnSlider() {
+// 	if (autoSlidingId) {
+// 		clearInterval(autoSlidingId);
+// 		autoSlidingId = null;
+// 	}
+// }
+
+// autosliding-ის დამატება შესაბამის ღილაკებზე
+// startAutoSliding.addEventListener("click", startIntervalFnSlider);
+// stopAutoSliding.addEventListener("click", stopIntervalFnSlider);
+
+// slidesWrapper.addEventListener("mouseenter", stopIntervalFnSlider);
+
+// slidesWrapper.addEventListener("mouseleave", startIntervalFnSlider);
+
+// სლაიდერის დარენდერება საიტის ჩატვირთვისას
+// initSlider();
 
 // COMMENT form ვალიდაციები
-// const userSignUpForm = document.querySelector("#sign-up"),
-// 	userName = document.querySelector("#username"),
-// 	email = document.querySelector("#email"),
-// 	password = document.querySelector("#password"),
-// 	personalNumber = document.querySelector("#personal_number"),
-// 	mobileNumber = document.querySelector("#mobile_number"),
-// 	position = document.querySelector("#position"),
-// 	userNameError = document.querySelector("#username-error"),
-// 	passwordError = document.querySelector("#password-error"),
-// 	emailError = document.querySelector("#email-error"),
-// 	personalNumberError = document.querySelector("#personal_number-error"),
-// 	mobileNumberError = document.querySelector("#mobile_number-error"),
-// 	positionError = document.querySelector("#position-error");
+const userSignUpForm = document.querySelector("#sign-up"),
+	userName = document.querySelector("#username"),
+	email = document.querySelector("#email"),
+	password = document.querySelector("#password"),
+	userNameError = document.querySelector("#username-error"),
+	passwordError = document.querySelector("#password-error"),
+	emailError = document.querySelector("#email-error");
 
-// function validatePosition() {
-// 	if (position.value.length >= 30) {
-// 		position.classList.add("error");
-// 		positionError.textContent =
-// 			"position description must be lower than 30 charachter";
+function validateUserName() {
+	// როცა ვალიდური არაა, ეს required არის და ცარიელი როცაა მაშინ გამოვა ერორი
+	if (!userName.validity.valid) {
+		// console.log(userName.validity);
+		userName.classList.add("error");
+		userNameError.textContent = "user name required";
 
-// 		return false;
-// 	} else {
-// 		positionError.textContent = "";
-// 		position.classList.remove("error");
+		// true ან დაბლა false ს ვაბრუნებთ იმის მიხედვით ვალიდაცია გაიარა თუ არა
+		return false;
+	} else {
+		userNameError.textContent = "";
+		userName.classList.remove("error");
+		return true;
+	}
+}
 
-// 		return true;
-// 	}
-// }
+function validateEmail() {
+	// როცა ვალიდური არაა, ეს required არის და ცარიელი როცაა მაშინ გამოვა ერორი
+	if (!email.validity.valid) {
+		email.classList.add("error");
+		emailError.textContent = "email required";
+		// როცა, ცარიელი არაა, მაგრამ მეილის სწორი ფორმა არაა და @ სიმბოლო არაა გამოყენებული
+		if (email.validity.typeMismatch) {
+			emailError.textContent = "not valid email";
+		}
+		return false;
+	} else {
+		emailError.textContent = "";
+		email.classList.remove("error");
+		return true;
+	}
+}
 
-// function validateMobileNumber() {
-// 	if (mobileNumber.value.length !== 9) {
-// 		mobileNumber.classList.add("error");
-// 		mobileNumberError.textContent = "mobile number must be 9 charachter";
+function validatePassword() {
+	// როცა პაროლი 4 სიმბოლოზე ნაკლებია, მაშინ გამოვა ერორი
+	if (password.value.length <= 4) {
+		password.classList.add("error");
+		passwordError.textContent = "password must be 4 or more charachter";
+		// console.log(userName.validity.tooShort);
+		return false;
+	} else {
+		passwordError.textContent = "";
+		password.classList.remove("error");
+		// password.type = "text";
+		return true;
+	}
+}
 
-// 		return false;
-// 	} else {
-// 		mobileNumberError.textContent = "";
-// 		mobileNumber.classList.remove("error");
+userName.addEventListener("input", (e) => {
+	// console.log(e.target.value);
+	validateUserName();
+});
 
-// 		return true;
-// 	}
-// }
+email.addEventListener("input", validateEmail);
+password.addEventListener("input", validatePassword);
 
-// function validatePersonalNumber() {
-// 	if (personalNumber.value.length !== 11) {
-// 		personalNumber.classList.add("error");
-// 		personalNumberError.textContent = "peronal number must be 11  charachter";
+userSignUpForm.addEventListener("submit", (e) => {
+	e.preventDefault();
+	// console.log(userName.validity.valid);
+	// console.log(email.validity);
+	// ამ ცვლადებში ვინახავთ ინფორმაციას იმის შესახებ თითოეული ინფუთი იყო თუ არა ვალიდური
+	const isValidUserName = validateUserName();
+	const isValidEmail = validateEmail();
+	const isValidPassword = validatePassword();
 
-// 		return false;
-// 	} else {
-// 		personalNumberError.textContent = "";
-// 		personalNumber.classList.remove("error");
+	// console.log(isValidUserName, isValidEmail, isValidPassword);
 
-// 		return true;
-// 	}
-// }
+	// showModal();
 
-// function validateUserName() {
-// 	if (!userName.validity.valid) {
-// 		userName.classList.add("error");
-// 		userNameError.textContent = "user name required";
+	if (isValidUserName && isValidEmail && isValidPassword) {
+		// თუ სამივე ინფუთი ვალიდურია ფორმა დასაბმითდეს / ან შევინახოთ ინფორმაცია და ბექის მხარეს გავაგზავნოთ
+		// userSignUpForm.submit()
 
-// 		return false;
-// 	} else {
-// 		userNameError.textContent = "";
-// 		userName.classList.remove("error");
-// 		return true;
-// 	}
-// }
+		const userInfo = {
+			userName: userName.value,
+			email: email.value,
+			password: password.value,
+		};
 
-// function validateEmail() {
-// 	if (!email.validity.valid) {
-// 		email.classList.add("error");
-// 		emailError.textContent = "email required";
-// 		if (email.validity.typeMismatch) {
-// 			emailError.textContent = "not valid email";
-// 		}
-// 		return false;
-// 	} else {
-// 		emailError.textContent = "";
-// 		email.classList.remove("error");
-// 		return true;
-// 	}
-// }
+		console.log(userInfo);
+		// მოდალის გამოტანა
+		dynamicOpenModal("#sign-in-modal");
+	}
+});
 
-// function validatePassword() {
-// 	if (password.value.length <= 4) {
-// 		password.classList.add("error");
-// 		passwordError.textContent = "password must be 4 or more charachter";
+// COMMENT modals, popup
+const modalEl = document.querySelector(".modal"),
+	closeBtn = document.querySelector(".modal-close"),
+	openModalSecond = document.querySelector(".open-modal-second");
 
-// 		return false;
-// 	} else {
-// 		passwordError.textContent = "";
-// 		password.classList.remove("error");
+function showModal() {
+	modalEl.classList.add("open");
+}
 
-// 		return true;
-// 	}
-// }
+function closeModal() {
+	modalEl.classList.remove("open");
+}
 
-// userName.addEventListener("input", validateUserName);
-// email.addEventListener("input", validateEmail);
-// password.addEventListener("input", validatePassword);
-// personalNumber.addEventListener("input", validatePersonalNumber);
-// mobileNumber.addEventListener("input", validateMobileNumber);
-// position.addEventListener("input", validatePosition);
+// closeBtn.addEventListener("click", closeModal);
 
-// userSignUpForm.addEventListener("submit", (e) => {
-// 	e.preventDefault();
-// 	const isValidUserName = validateUserName();
-// 	const isValidEmail = validateEmail();
-// 	const isValidPassword = validatePassword();
-// 	const isValidId = validatePersonalNumber();
-// 	const isValidMob = validateMobileNumber();
-// 	const isVallidPosition = validatePosition();
-// if (isValidUserName && isValidEmail && isValidPassword) {
-// 	const userInfo = {
-// 		userName: userName.value,
-// 		email: email.value,
-// 		password: password.value,
-// 	};
-
-// 		console.log(userInfo);
-
-// 		dynamicOpenModal("#sign-in-modal");
-// 	}
-// });
-
-// // COMMENT modals, popup
 function dynamicOpenModal(selector) {
 	const modal = document.querySelector(selector);
 	if (modal) {
@@ -156,205 +271,33 @@ function dynamicCloseModal(selector) {
 	}
 }
 
-const openRegFormBtn = document.querySelector("#open-reg-form");
-openRegFormBtn.addEventListener("click", () => {
-	dynamicOpenModal("#reg-modal");
+openModalSecond.addEventListener("click", () => {
+	dynamicOpenModal("#sign-up-modal");
 });
 
-//NOTE Requests and Responses
+// ERROR HANDLING
+const el = document.querySelector(".form2");
 
-const createUserUrl = "http://borjomi.loremipsum.ge/api/register", //method POST
-	getAllUsersUrl = "http://borjomi.loremipsum.ge/api/all-users", //method GET
-	getSingleUserUrl = "http://borjomi.loremipsum.ge/api/get-user/1 ", //id method  GET
-	updateUserUrl = "http://borjomi.loremipsum.ge/api/update-user/1 ", //id method PUT
-	deleteUserUrl = "http://borjomi.loremipsum.ge/api/delete-user/1"; //id method DELETE
-
-const regForm = document.querySelector("#reg"),
-	user_Name = document.querySelector("#user_name"),
-	userSurname = document.querySelector("#user_surname"),
-	userEmail = document.querySelector("#user_email"),
-	userPhone = document.querySelector("#user_phone"),
-	userPersonalID = document.querySelector("#user_personal-id"),
-	userZip = document.querySelector("#user_zip-code"),
-	userGender = document.querySelector("#user_gender"),
-	// user id ფორმში, რომელიც გვჭირდება დაედითებისთვის
-	user_id = document.querySelector("#user_id");
-
-// TODO: დაასრულეთ შემდეგი ფუნქციები
-function renderUsers(usersArray) {
-	// TODO: usersArray არის სერვერიდან დაბრუნებული ობიექტების მასივი
-	// TODO: ამ მონაცმების მიხედვით html ში ჩასვით ცხრილი როგორც "ცხრილი.png" შია
-	console.log(usersArray);
-	userActions(); // ყოველ რენდერზე ახლიდან უნდა მივაბათ ივენთ ლისნერები
+try {
+	console.log("try start");
+	el.addEventListener("click", (e) => {
+		console.log(e);
+	});
+	console.log("try end");
+} catch (error) {
+	// ეს ერორი გამოვა იმ შემთხვევაში თუ try- ნაწილში ერორია და იმ ერორის შესახებ ინფორმაციას გამოიტანს
+	console.log(error);
+} finally {
+	// ეს კოდი მაინც შესრულდება, მიუხედავად იმისა ერორი მოხდა თუ არა
+	console.log("finally");
 }
 
-// TODO: დაასრულე
-function userActions() {
-	// 1. ცხრილში ღილაკებზე უნდა მიამაგროთ event listener-ები
-	// 2. იქნება 2 ღილაკი რედაქტირება და წაშლა როგორც "ცხრილი.png" ში ჩანს
-	// 3. id შეინახეთ data-user-id ატრიბუტად ღილაკებზე, data ატრიბუტებზე წვდომა შეგიძლიათ dataset-ის გამოყენებით
-	//  selectedElement.dataset
-	// 4. წაშლა ღილაკზე დაჭერისას უნდა გაიგზავნოს წაშლის მოთხოვნა (deleteUser ფუნქციის მეშვეობით) სერვერზე და გადაეცეს id
-	// 5. ედიტის ღილაკზე უნდა გაიხსნას მოდალი სადაც ფორმი იქნება იმ მონაცემებით შევსებული რომელზეც მოხდა კლიკი
-	// ედიტის ღილაკზე უნდა გამოიძახოთ getUser ფუნქცია და რომ დააბრუნებს ერთი მომხმარებლის დატას (ობიექტს
-	// და არა მასივს)
-	// ეს დატა უნდა შეივსოს ფორმში
-	// და ამის შემდეგ შეგიძლიათ დააედიტოთ ეს ინფორმაცია და ფორმის დასაბმითებისას უნდა მოხდეს updateUser()
-	// ფუნქციის გამოძახება, სადაც გადასცემთ განახლებულ იუზერის ობიექტს, გვჭირდება იუზერის აიდიც, რომელიც
-	// მოდალის გახსნისას user_id-ის (hidden input არის და ვიზუალურად არ ჩანს) value-ში შეგიძლია შეინახოთ
+const el2 = document.querySelector(".form2");
+
+if (el2) {
+	el2.addEventListener("click", (e) => {
+		console.log(e);
+	});
 }
-
-function getUsers() {
-	fetch("http://borjomi.loremipsum.ge/api/all-users")
-		.then((response) => {
-			return response.json();
-		})
-		.then((data) => {
-			// console.log(data);
-			let users = data.users;
-			// console.log(users);
-
-			// html-ში გამოტანა მონაცემების
-			renderUsers(users);
-		})
-		.catch((error) => {
-			console.log(error);
-		});
-}
-
-function deleteUser(id) {
-	fetch(`http://borjomi.loremipsum.ge/api/delete-user/${id}`, {
-		method: "delete",
-	})
-		.then((res) => res.json())
-		.then((data) => {
-			console.log(data);
-			// გვიბრუნებს სტატუსს
-		})
-		.catch((error) => {
-			console.log(error);
-		});
-}
-
-function getUser(id) {
-	fetch(`http://borjomi.loremipsum.ge/api/get-user/${id}`, {
-		method: "get",
-	})
-		.then((res) => res.json())
-		.then((data) => {
-			// გვიბრუნებს იუზერის ობიექტს
-			console.log(data);
-			getUsers(); //TODO: შენახვის, ედიტირების და წაშლის შემდეგ ახლიდან წამოიღეთ დატა
-		})
-		.catch((error) => {
-			console.log(error);
-		});
-}
-
-function updateUser(userObj) {
-	// მიიღებს დაედითებულ ინფორმაციას და გააგზავნით სერვერზე
-	// TODO დაასრულეთ ფუნქცია
-	//  method: "put",  http://borjomi.loremipsum.ge/api/update-user/${userObj.id}
-	// TODO: შენახვის, ედიტირების და წაშლის შემდეგ ახლიდან წამოიღეთ დატა
-}
-
-function createUser(userData) {
-	fetch("http://borjomi.loremipsum.ge/api/register", {
-		method: "post",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(userData),
-	})
-		.then((response) => {
-			return response.json();
-		})
-		.then((data) => {
-			// გვიბრუნებს სტატსუსს (წარმატებით გაიგზავნა თუ არა) და დამატებული იუზერის ობიექტს
-			// დატის მიღების შემდეგ ვწერთ ჩვენს კოდს
-			console.log(data);
-			// ხელახლა გამოგვაქვს ყველა იუზერი
-			// TODO: შენახვის, ედიტირების და წაშლის შემდეგ ახლიდან წამოიღეთ დატა
-			// getUsers();
-		})
-		.catch((error) => {
-			console.log(error);
-		});
-}
-
-// იგივე ფუნქცია async await ის გამოყენებით
-
-// async function createUser(userData) {
-// 	try {
-// 		const response = await fetch("http://borjomi.loremipsum.ge/api/register", {
-// 			method: "post",
-//			headers: { "Content-Type": "application/json" },
-// 			body: JSON.stringify(userData),
-//
-// 		});
-// 		const data = await response.json();
-// 		// დატის მიღების შემდეგ ვწერთ ჩვენს კოდს
-// 		console.log(data);
-// 		getUsers();
-// 	} catch (e) {
-// 		console.log("Error - ", e);
-// 	}
-// }
-
-getUsers();
-
-regForm.addEventListener("submit", (e) => {
-	e.preventDefault();
-
-	const userInfo = {
-		id: user_id.value,
-		first_name: user_Name.value,
-		last_name: userSurname.value,
-		phone: userPhone.value,
-		id_number: userPersonalID.value,
-		email: userEmail.value,
-		gender: userGender.value,
-		zip_code: userZip.value,
-	};
-
-	//  TODO: თუ user_id.value არის ცარიელი მაშინ უნდა შევქმნათ  -->  createUser(userData);
-	// TODO: თუ user_id.value არის მაშინ უნდა დავაედიტოთ, (როცა ფორმს ედითის ღილაკის შემდეგ იუზერის ინფოთი
-	// ვავსებთ, ვაედითებთ და ვასაბმითებს) -->  updateUser(userData);
-
-	// console.log(userInfo, JSON.stringify(userInfo));
-	// ინფორმაციის გაგზავნის შემდეგ ფორმის გასუფთავება
-	regForm.reset();
-});
-
-// რადგან fetch ასინქრონული ფუნქციაა კოდის ამ ნაწილის შესრულებას არ აფერხებს
 
 console.log("example text");
-
-// jsonplaceholder-ის სატესტო დატა, გაგზავნა მონაცემების
-
-// function createData(testData) {
-// 	fetch("https://jsonplaceholder.typicode.com/posts", {
-// 		method: "POST",
-// 		body: JSON.stringify(testData),
-// 		headers: {
-// 			"Content-type": "application/json; charset=UTF-8",
-// 		},
-// 	})
-// 		.then((response) => response.json())
-// 		.then((json) => {
-// 			console.log(json);
-// 		});
-// }
-
-// const data = {
-// 	title: "example title",
-// 	body: "example text",
-// 	userId: 1,
-// };
-
-// const data2 = {
-// 	title: "example title 2",
-// 	body: "example text",
-// 	userId: 1,
-// };
-
-// createData(data);
-// createData(data2);
